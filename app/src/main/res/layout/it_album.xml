@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="item"
+            type="com.example.appsfactory.features.lastfm.model.Album" />
+
+        <variable
+            name="clickListener"
+            type="com.example.appsfactory.features.lastfm.ui.savedalbums.AlbumListener" />
+    </data>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/album_card"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/padding_medium"
+        android:onClick="@{() -> clickListener.onClick(item)}">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/padding_medium">
+
+            <ImageView
+                android:id="@+id/album_image"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                tools:src="@drawable/ic_music"
+                android:contentDescription="@string/save_album" />
+
+            <TextView
+                android:id="@+id/name_text"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_size_normal"
+                android:text="@{item.name}"
+                android:maxLines="3"
+                android:layout_marginStart="@dimen/padding_medium"
+                app:layout_constraintStart_toEndOf="@+id/album_image"
+                app:layout_constraintTop_toTopOf="@id/album_image"
+                app:layout_constraintEnd_toStartOf="@id/save_image"
+                tools:text="Title" />
+
+            <TextView
+                android:id="@+id/stars_text"
+                android:layout_width="178dp"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/text_size_small"
+                android:drawablePadding="4dp"
+                android:gravity="center_vertical"
+                app:drawableStartCompat="@drawable/ic_listeners"
+                app:layout_constraintStart_toStartOf="@id/name_text"
+                app:layout_constraintTop_toBottomOf="@id/name_text"
+                app:layout_constraintBottom_toBottomOf="@id/album_image"
+                android:text="@{item.playCount+``}"
+                tools:text="25" />
+
+            <ImageView
+                android:id="@+id/save_image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="@{() -> clickListener.onSave(item)}"
+                android:saveAlbum="@{clickListener.onCheckIfSaved(item)}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                tools:src="@drawable/ic_bookmark"
+                android:contentDescription="@string/save_album" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+</layout>

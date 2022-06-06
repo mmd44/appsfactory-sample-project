@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/albumsListFragment">
+    <activity
+        android:id="@+id/albumActivity"
+        android:name="com.example.appsfactory.features.lastfm.ui.AlbumActivity"
+        android:label="AlbumActivity" />
+    <fragment
+        android:id="@+id/albumsListFragment"
+        android:name="com.example.appsfactory.features.lastfm.ui.savedalbums.AlbumsListFragment"
+        android:label="AlbumsListFragment" >
+        <action
+            android:id="@+id/action_albumsListFragment_to_albumDetailsFragment"
+            app:destination="@id/albumDetailsFragment" />
+        <action
+            android:id="@+id/action_albumsListFragment_to_searchFragment"
+            app:destination="@id/searchFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/albumDetailsFragment"
+        android:name="com.example.appsfactory.features.lastfm.ui.albumdetail.AlbumDetailsFragment"
+        android:label="AlbumDetailsFragment" >
+        <argument
+            android:name="album"
+            app:argType="com.example.appsfactory.features.lastfm.model.Album" />
+    </fragment>
+    <fragment
+        android:id="@+id/searchFragment"
+        android:name="com.example.appsfactory.features.lastfm.ui.search.SearchFragment"
+        android:label="SearchFragment" >
+        <action
+            android:id="@+id/action_searchFragment_to_topAlbumsFragment"
+            app:destination="@id/topAlbumsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/topAlbumsFragment"
+        android:name="com.example.appsfactory.features.lastfm.ui.topalbums.TopAlbumsFragment"
+        android:label="TopAlbumsFragment" >
+        <argument
+            android:name="artistName"
+            app:argType="string" />
+    </fragment>
+</navigation>

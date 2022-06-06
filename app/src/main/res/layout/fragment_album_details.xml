@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="item"
+            type="com.example.appsfactory.features.lastfm.model.Album" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/album_image"
+            android:layout_width="250dp"
+            android:layout_height="250dp"
+            android:layout_marginTop="@dimen/padding_xxlarge"
+            android:albumImage="@{item}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:contentDescription="@string/album_image"
+            tools:src="@drawable/ic_music"/>
+
+        <TextView
+            android:id="@+id/album_name_label_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/padding_xxlarge"
+            android:layout_marginTop="@dimen/padding_xxlarge"
+            android:text="@string/album_name"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/album_listeners_label_text"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/album_image" />
+
+        <TextView
+            android:id="@+id/album_listeners_label_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/padding_xxxlarge"
+            android:text="@string/album_listeners_count"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@+id/album_name_label_text"
+            app:layout_constraintTop_toBottomOf="@+id/album_name_label_text" />
+
+        <TextView
+            android:id="@+id/album_name_value_text"
+            android:text="@{item.name}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/padding_xlarge"
+            android:ems="10"
+            app:layout_constraintBaseline_toBaselineOf="@+id/album_name_label_text"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:text="Album Name" />
+
+        <TextView
+            android:id="@+id/album_listeners_value_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/padding_xlarge"
+            android:ems="10"
+            android:text="@{item.playCount + ``}"
+
+            app:layout_constraintBottom_toBottomOf="@+id/album_listeners_label_text"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/album_listeners_label_text"
+            tools:text="50" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
