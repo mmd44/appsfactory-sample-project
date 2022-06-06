@@ -23,7 +23,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             android:contentDescription="@string/album_image"
-            tools:src="@drawable/ic_music"/>
+            android:src="@drawable/ic_music"/>
 
         <TextView
             android:id="@+id/album_name_label_text"
