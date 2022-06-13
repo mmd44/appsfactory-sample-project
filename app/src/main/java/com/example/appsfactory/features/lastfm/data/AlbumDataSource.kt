@@ -5,6 +5,7 @@ import androidx.paging.PagingData
 import com.example.appsfactory.base.Result
 import com.example.appsfactory.features.lastfm.model.Album
 import com.example.appsfactory.features.lastfm.model.Artist
+import com.example.appsfactory.features.lastfm.model.Track
 
 
 interface AlbumDataSource {
@@ -17,4 +18,5 @@ interface AlbumDataSource {
 
     fun searchForArtists(query: String): LiveData<PagingData<Artist>>
     suspend fun getTopAlbums(artistName: String): Result<List<Album>>
+    suspend fun getAlbumTracks (album: Album): Result<List<Track>>
 }

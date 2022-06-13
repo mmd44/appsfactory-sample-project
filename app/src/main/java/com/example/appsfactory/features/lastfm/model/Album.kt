@@ -19,6 +19,8 @@ data class Album(
     var isSaved: Boolean? = false
     @Transient
     var imageBitmap: Bitmap? = null
+    @Transient
+    var tracks: List<Track>? = null
 
     fun getMediumImageUrl(): String? {
         return if (image?.isNotEmpty() == true && image.size > 1) image[1].url

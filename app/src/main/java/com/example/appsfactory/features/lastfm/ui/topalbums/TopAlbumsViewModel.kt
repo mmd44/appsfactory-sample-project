@@ -8,6 +8,7 @@ import com.example.appsfactory.base.BaseViewModel
 import com.example.appsfactory.base.Result
 import com.example.appsfactory.features.lastfm.data.AlbumDataSource
 import com.example.appsfactory.features.lastfm.model.Album
+import com.example.appsfactory.features.lastfm.model.Track
 import kotlinx.coroutines.launch
 
 class TopAlbumsViewModel(
@@ -75,18 +76,31 @@ class TopAlbumsViewModel(
                         showSnackBar.value = result.message
                 }
             } else {
-                val result = dataSource.saveAlbum(album)
+                fetchTracksAndSave (album)
+            }
+        }
+    }
+
+    private suspend fun fetchTracksAndSave(album: Album) {
+        val result = dataSource.getAlbumTracks(album)
+        when (result) {
+            is Result.Success<*> -> {
+                album.tracks = result.data as List<Track>
+                val saveResult = dataSource.saveAlbum(album)
                 showLoading.postValue(false)
-                when (result) {
+                when (saveResult) {
                     is Result.Success<Boolean> -> {
                         album.isSaved = true
                         saveStatus.postValue(album)
                         showSnackBar.value = app.getString(R.string.successfully_saved)
                     }
                     is Result.Error ->
-                        showSnackBar.value = result.message
+                        showSnackBar.value = saveResult.message
                 }
+                showSnackBar.value = app.getString(R.string.successfully_saved)
             }
+            is Result.Error ->
+                showSnackBar.value = result.message
         }
     }
 

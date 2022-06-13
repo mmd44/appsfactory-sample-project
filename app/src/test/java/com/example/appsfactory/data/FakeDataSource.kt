@@ -7,11 +7,16 @@ import com.example.appsfactory.base.Result
 import com.example.appsfactory.features.lastfm.data.AlbumDataSource
 import com.example.appsfactory.features.lastfm.model.Album
 import com.example.appsfactory.features.lastfm.model.Artist
+import com.example.appsfactory.features.lastfm.model.Track
 
 // FakeDataSource that acts as a test double to the LocalDataSource
 class FakeDataSource (var albums: MutableList<Album>? = mutableListOf()) : AlbumDataSource {
 
     override fun searchForArtists(query: String): LiveData<PagingData<Artist>> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun getAlbumTracks(album: Album): Result<List<Track>> {
         TODO("Not yet implemented")
     }
 

@@ -16,9 +16,17 @@ interface LastFMService {
     ): Deferred<GetArtistSearchResponse>
 
     @GET("2.0/")
-    fun topAlbumsAsync(
+    fun getTopAlbumsAsync(
         @Query("artist") artist: String,
         @Query("method") method: String? = "artist.gettopalbums",
         @Query("format") format: String? = "json",
     ): Deferred<GetTopAlbumsResponse>
+
+    @GET("2.0/")
+    fun getAlbumTracksAsync(
+        @Query("artist") artist: String,
+        @Query("album") album: String,
+        @Query("method") method: String? = "album.getinfo",
+        @Query("format") format: String? = "json",
+    ): Deferred<GetAlbumTracksResponse>
 }

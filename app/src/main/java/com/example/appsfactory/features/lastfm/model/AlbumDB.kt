@@ -20,7 +20,8 @@ data class AlbumDB(
     @ColumnInfo(name = "play_count") var playCount: Int,
     @ColumnInfo(name = "url") var url: String,
     @ColumnInfo(name = "artist_name") var artistName: String,
-    @ColumnInfo(name = "album_image") var albumImage: Bitmap?
+    @ColumnInfo(name = "album_image") var albumImage: Bitmap?,
+    @ColumnInfo(name = "album_tracks") var albumTracks: List<Track>?
 )
 
 fun List<Album>.asDatabaseModel(): Array<AlbumDB> {
@@ -35,7 +36,8 @@ fun Album.asDataBaseModel(): AlbumDB {
         playCount = this.playCount,
         url = this.url,
         artistName = this.artist.name,
-        albumImage = this.imageBitmap
+        albumImage = this.imageBitmap,
+        albumTracks = this.tracks
     )
 }
 
@@ -54,5 +56,6 @@ fun AlbumDB.asDomainModel(): Album {
         image = null,
     )
     album.imageBitmap = this.albumImage
+    album.tracks = this.albumTracks
     return album
 }

@@ -8,10 +8,7 @@ import androidx.paging.PagingData
 import androidx.paging.liveData
 import com.example.appsfactory.base.Result
 import com.example.appsfactory.db.local.AlbumsDao
-import com.example.appsfactory.features.lastfm.model.Album
-import com.example.appsfactory.features.lastfm.model.Artist
-import com.example.appsfactory.features.lastfm.model.asDataBaseModel
-import com.example.appsfactory.features.lastfm.model.asDomainModel
+import com.example.appsfactory.features.lastfm.model.*
 import com.example.appsfactory.network.LastFM.lastFMService
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
@@ -48,7 +45,15 @@ class AlbumRepository(
 
     override suspend fun getTopAlbums(artistName: String): Result<List<Album>> = withContext(ioDispatcher) {
         return@withContext try {
-            Result.Success(lastFMService.topAlbumsAsync(artistName).await().topAlbums.albums)
+            Result.Success(lastFMService.getTopAlbumsAsync(artistName).await().topAlbums.albums)
+        } catch (ex: Exception) {
+            Result.Error(ex.localizedMessage)
+        }
+    }
+
+    override suspend fun getAlbumTracks(album: Album): Result<List<Track>> = withContext(ioDispatcher) {
+        return@withContext try {
+            Result.Success(lastFMService.getAlbumTracksAsync(album = album.name, artist = album.artist.name).await().getAlbumTracks())
         } catch (ex: Exception) {
             Result.Error(ex.localizedMessage)
         }

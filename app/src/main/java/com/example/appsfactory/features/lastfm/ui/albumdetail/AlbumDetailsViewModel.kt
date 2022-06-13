@@ -13,7 +13,4 @@ class AlbumDetailsViewModel(
     private val album: Album,
 ) : BaseViewModel(app) {
 
-    private var _album = MutableLiveData<Album>()
-    val storedAlbum: LiveData<Album>
-        get() = _album
 }

@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.appsfactory.R
 import com.example.appsfactory.base.BaseFragment
 import com.example.appsfactory.databinding.FragmentAlbumDetailsBinding
@@ -23,7 +24,7 @@ class AlbumDetailsFragment : BaseFragment() {
         parametersOf(args.album)
     }
 
-    private lateinit var _binding:FragmentAlbumDetailsBinding
+    private lateinit var _binding: FragmentAlbumDetailsBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -46,6 +47,13 @@ class AlbumDetailsFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setupRecyclerAndObservers()
     }
 
+    private fun setupRecyclerAndObservers() {
+        val adapter = TracksAdapter()
+        _binding.tracksRecycler.layoutManager = LinearLayoutManager(this.context)
+        _binding.tracksRecycler.adapter = adapter
+        adapter.submitItemsList(args.album.tracks)
+    }
 }
