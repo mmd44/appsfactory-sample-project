@@ -10,11 +10,11 @@ import androidx.room.RoomDatabase
  */
 object LocalDB {
 
-    fun createDB(context: Context): RoomDatabase {
+    fun createDB(context: Context): AlbumsDao {
         return Room.databaseBuilder(
             context.applicationContext,
             AlbumsDatabase::class.java, "lastfm.db"
-        ).build()
+        ).build().albumDao()
     }
 
 }

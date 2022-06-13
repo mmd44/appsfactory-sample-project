@@ -3,6 +3,7 @@ package com.example.appsfactory
 import android.app.Application
 import com.example.appsfactory.db.local.AlbumsDatabase
 import com.example.appsfactory.db.local.LocalDB
+import com.example.appsfactory.features.lastfm.data.AlbumDataSource
 import com.example.appsfactory.features.lastfm.data.AlbumRepository
 import com.example.appsfactory.features.lastfm.model.Album
 import com.example.appsfactory.features.lastfm.ui.albumdetail.AlbumDetailsViewModel
@@ -28,32 +29,32 @@ class MyApp : Application() {
             viewModel {
                 AlbumsListViewModel(
                     get(),
-                    get(),
+                    get() as AlbumDataSource,
                 )
             }
             viewModel { (album: Album) ->
                 AlbumDetailsViewModel(
                     get(),
-                    get(),
+                    get() as AlbumDataSource,
                     album
                 )
             }
             viewModel {
                 SearchViewModel(
                     get(),
-                    get(),
+                    get() as AlbumDataSource,
                 )
             }
             viewModel { (artistName: String) ->
                 TopAlbumsViewModel(
                     get(),
-                    get(),
+                    get() as AlbumDataSource,
                     artistName
                 )
             }
 
-            single { AlbumRepository(get()) }
-            single { LocalDB.createDB(this@MyApp) as AlbumsDatabase }
+            single { AlbumRepository(get()) as AlbumDataSource }
+            single { LocalDB.createDB(this@MyApp) }
         }
 
         startKoin {

@@ -4,12 +4,12 @@ import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.appsfactory.base.BaseViewModel
-import com.example.appsfactory.features.lastfm.data.AlbumRepository
+import com.example.appsfactory.features.lastfm.data.AlbumDataSource
 import com.example.appsfactory.features.lastfm.model.Album
 
 class AlbumDetailsViewModel(
     val app: Application,
-    private val repository: AlbumRepository,
+    private val dataSource: AlbumDataSource,
     private val album: Album,
 ) : BaseViewModel(app) {
 

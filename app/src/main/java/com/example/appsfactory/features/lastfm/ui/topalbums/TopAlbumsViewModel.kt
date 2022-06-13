@@ -6,13 +6,13 @@ import androidx.lifecycle.viewModelScope
 import com.example.appsfactory.R
 import com.example.appsfactory.base.BaseViewModel
 import com.example.appsfactory.base.Result
-import com.example.appsfactory.features.lastfm.data.AlbumRepository
+import com.example.appsfactory.features.lastfm.data.AlbumDataSource
 import com.example.appsfactory.features.lastfm.model.Album
 import kotlinx.coroutines.launch
 
 class TopAlbumsViewModel(
     val app: Application,
-    private val repository: AlbumRepository,
+    private val dataSource: AlbumDataSource,
     private val artistName: String,
 ) : BaseViewModel(app) {
 
@@ -24,7 +24,7 @@ class TopAlbumsViewModel(
 
     init {
         viewModelScope.launch {
-            val result = repository.getStoredAlbums()
+            val result = dataSource.getStoredAlbums()
             when (result) {
                 is Result.Success<*> -> {
                     savedAlbumsList = result.data as MutableList<Album>
@@ -38,7 +38,7 @@ class TopAlbumsViewModel(
     fun loadTopAlbums() {
         showLoading.value = true
         viewModelScope.launch {
-            val result = repository.getTopAlbums(artistName)
+            val result = dataSource.getTopAlbums(artistName)
             showLoading.postValue(false)
             when (result) {
                 is Result.Success<*> -> {
@@ -62,7 +62,7 @@ class TopAlbumsViewModel(
         showLoading.value = true
         viewModelScope.launch {
             if (checkIfSaved(album)) {
-                val result = repository.removeAlbum(album)
+                val result = dataSource.removeAlbum(album)
                 showLoading.postValue(false)
                 when (result) {
                     is Result.Success<Boolean> -> {
@@ -75,7 +75,7 @@ class TopAlbumsViewModel(
                         showSnackBar.value = result.message
                 }
             } else {
-                val result = repository.saveAlbum(album)
+                val result = dataSource.saveAlbum(album)
                 showLoading.postValue(false)
                 when (result) {
                     is Result.Success<Boolean> -> {

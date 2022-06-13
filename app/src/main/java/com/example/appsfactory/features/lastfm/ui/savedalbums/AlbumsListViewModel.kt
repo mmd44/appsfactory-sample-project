@@ -1,10 +1,12 @@
 package com.example.appsfactory.features.lastfm.ui.savedalbums
 
 import android.app.Application
+import androidx.lifecycle.Observer
 import androidx.lifecycle.viewModelScope
 import com.example.appsfactory.R
 import com.example.appsfactory.base.BaseViewModel
 import com.example.appsfactory.base.Result
+import com.example.appsfactory.features.lastfm.data.AlbumDataSource
 import com.example.appsfactory.features.lastfm.data.AlbumRepository
 import com.example.appsfactory.features.lastfm.model.Album
 import kotlinx.coroutines.launch
@@ -12,16 +14,20 @@ import kotlinx.coroutines.launch
 
 class AlbumsListViewModel(
     val app: Application,
-    private val repository: AlbumRepository,
+    private val dataSource: AlbumDataSource,
 ) : BaseViewModel(app) {
 
-    var albumsList = repository.getStoredAlbumsLiveData()
+    var albumsList = dataSource.getStoredAlbumsLiveData()
+
+    init {
+        invalidateShowNoData()
+    }
 
     fun removeAlbum (album: Album) {
         album.isSaved = false
         showLoading.value = true
         viewModelScope.launch {
-            val result = repository.removeAlbum(album)
+            val result = dataSource.removeAlbum(album)
             showLoading.postValue(false)
             when (result) {
                 is Result.Success<Boolean> -> {
